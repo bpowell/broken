@@ -1,0 +1,3 @@
+include brokenapp/config/deployment.ini_tmpl
+recursive-include brokenapp/public *
+recursive-include brokenapp/templates *

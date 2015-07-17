@@ -19,9 +19,19 @@
 #include <dlfcn.h>
 
 /*
+ * Only for strcpy.
+ */
+#include <string.h>
+
+/*
  * Function pointer to the real malloc
  */
 static void* (*real_malloc)(size_t)=NULL;
+
+/*
+ * Our message from our example program.
+ */
+static char *msg;
 
 /*
  * init function that is ran the first time
@@ -55,6 +65,14 @@ void *malloc(size_t size)
     void *p = NULL;
     p = real_malloc(size);
     fprintf(stdout, "Address to be used: %p\n", p);
+
+    /*
+     * Comment this out for programs besides the example
+     * one provided. This sets our message to the address
+     * returned by the real malloc.
+     */
+    msg = p;
+
     return p;
 }
 
@@ -63,5 +81,13 @@ void *malloc(size_t size)
  * Memory leaks incoming!!
  */
 void free(void *ptr) {
+    /*
+     * Comment this out for programs besides the example
+     * one provided. This changes the data from our example
+     * program.
+     */
+    strcpy(msg, "5678");
+    fprintf(stdout, "In Free MSG: %s\n", msg);
+
     fprintf(stdout, "We didn't free()!\n");
 }

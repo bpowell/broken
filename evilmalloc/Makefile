@@ -1,11 +1,10 @@
-CXX = gcc
-CXXFLAGS = -shared -fPIC -g
-EXE = evil.so
+all: evil.so example
 
-all: $(EXE)
+evil.so: 
+	gcc -shared -fPIC -g -ldl evil.c -o $@
 
-$(EXE): 
-	$(CXX) $(CXXFLAGS) evil.c -o $@
+example:
+	gcc -Wl,--no-as-needed -ldl example.c -o $@
 
 clean:
-	rm $(EXE)
+	rm evil.so example
